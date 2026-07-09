@@ -16,12 +16,12 @@ export default function Landing() {
           and efficiency.
         </p>
         <div className="flex justify-center">
-        <Link
-          to="/home"
-          className="bg-stone-900 text-white px-6 py-2 rounded cursor-pointer hover:bg-stone-800 transition"
-        >
-          Get Started
-        </Link>
+          <Link
+            to="/login"
+            className="bg-stone-900 text-white px-6 py-2 rounded cursor-pointer hover:bg-stone-800 transition"
+          >
+            Get Started
+          </Link>
         </div>
       </main>
     </div>

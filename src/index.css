@@ -6,3 +6,7 @@
 * {
   font-family: "Nunito", sans-serif;
 }
+
+@theme {
+  --color-brand-primary: #0544c6;
+}

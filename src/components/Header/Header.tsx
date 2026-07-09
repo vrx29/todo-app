@@ -27,7 +27,10 @@ export default function Header() {
               Contact
             </a>
           </nav>
-          <Link to="/home" className="hidden md:block bg-stone-900 text-white px-6 py-2 rounded cursor-pointer hover:bg-stone-800 transition">
+          <Link
+            to="/login"
+            className="hidden md:block bg-stone-900 text-white px-6 py-2 rounded cursor-pointer hover:bg-stone-800 transition"
+          >
             Get Started
           </Link>
           {/* Mobile Menu Button */}
