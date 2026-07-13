@@ -1,9 +1,11 @@
+import axios from "axios";
 import { useState } from "react";
+import authApi from "../api/axios";
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -14,12 +16,16 @@ export default function Login() {
   };
 
   // Dedicated API / Action Calls
-  const handleLogin = () => {
-    console.log("Calling Login API with:", {
-      email: formData.email,
-      password: formData.password,
-    });
-    alert("Login Form Submitted!");
+  const handleLogin = async () => {
+    try {
+      const res = await authApi.post("/login", {
+        username: formData.username,
+        password: formData.password,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSignUp = () => {
@@ -97,14 +103,14 @@ export default function Login() {
               {!isLogin && (
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                    Full Name
+                    Email
                   </label>
                   <div className="relative">
                     <input
                       type="text"
-                      name="name"
-                      placeholder="John Doe"
-                      value={formData.name}
+                      name="email"
+                      placeholder="John@gmail.com"
+                      value={formData.email}
                       onChange={handleChange}
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition-all"
                       required
@@ -113,24 +119,22 @@ export default function Login() {
                 </div>
               )}
 
-              {/* Email Input */}
               <div>
                 <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  Email
+                  Username
                 </label>
                 <div className="relative">
                   <input
-                    type="email"
-                    name="email"
-                    placeholder="john@gmail.com"
-                    value={formData.email}
+                    type="text"
+                    name="username"
+                    placeholder="John Doe"
+                    value={formData.username}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition-all pr-10"
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition-all"
                     required
                   />
                 </div>
               </div>
-
               {/* Password Input */}
               <div>
                 <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">
