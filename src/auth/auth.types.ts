@@ -1,7 +1,11 @@
 export interface User {
   id: number;
-  name: string;
+  firstName: string;
+  maidenName: string;
+  lastName: string;
   email: string;
+  gender: string;
+  role: string;
 }
 
 export interface LoginPayload {

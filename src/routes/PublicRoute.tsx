@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../auth/authContext";
+import { Loader } from "../views";
 
 const PublicRoute = () => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return isAuthenticated ? <Navigate to="/home" replace /> : <Outlet />;

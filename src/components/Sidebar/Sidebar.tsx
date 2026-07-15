@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
+import type { User } from "../../auth/auth.types";
 
-export default function Sidebar() {
+interface SidebarProps {
+  user: User | null;
+}
+export default function Sidebar({ user }: SidebarProps) {
+  console.log("SIDEBAR", user);
   return (
     <div className="hidden md:block h-full p-4 border-r w-[300px] border-box">
       <div className="flex items-center gap-4 my-4">
         <div className="w-[50px] h-[50px] border rounded-full flex items-center justify-center text-2xl font-bold">
-          VK
+          {user && `${user.firstName[0]} ${user.lastName[0]}`}
         </div>
-        Vineet Kumar
+        {user && `${user.firstName} ${user.maidenName} ${user.lastName}`}
       </div>
       {/* Create new note button */}
       <button className="w-full my-6 px-6 py-2 bg-stone-900 text-white rounded cursor-pointer">

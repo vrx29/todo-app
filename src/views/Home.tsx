@@ -1,9 +1,11 @@
+import { useAuth } from "../auth/authContext";
 import { NoteContent, NotesList, Sidebar } from "../components";
 
 export default function Home() {
+  const { user } = useAuth();
   return (
     <main className="flex w-full h-screen bg-white dark:bg-gray-900 text-stone-900 dark:text-white">
-      <Sidebar />
+      <Sidebar user={user} />
       <div className="flex-1 min-w-0">
         {/* Searchbar component */}
 
