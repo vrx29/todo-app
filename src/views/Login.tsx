@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
-import authApi from "../api/axios";
+import { useAuth } from "../auth/authContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,7 +9,8 @@ export default function Login() {
     email: "",
     password: "",
   });
-
+  const { loading, login } = useAuth();
+  const navigate = useNavigate();
   // Handle Input Changes
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,11 +19,11 @@ export default function Login() {
   // Dedicated API / Action Calls
   const handleLogin = async () => {
     try {
-      const res = await authApi.post("/login", {
+      await login({
         username: formData.username,
         password: formData.password,
       });
-      console.log(res);
+      navigate("/home", { replace: true });
     } catch (error) {
       console.log(error);
     }
@@ -280,6 +281,7 @@ export default function Login() {
                   Privacy Policy
                 </a>
               </div>
+              <div>{loading ? <p>loading...</p> : <p>DOne</p>}</div>
             </div>
           </div>
         </div>

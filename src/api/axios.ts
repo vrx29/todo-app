@@ -1,23 +1,27 @@
 import axios from "axios";
+import { refreshApi } from "./auth.apis";
 
-const authApi = axios.create({
-  baseURL: "https://dummyjson.com/auth",
+const api = axios.create({
+  baseURL: "https://dummyjson.com",
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-authApi.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("ACCESS_TOKEN_KEY");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  function (error) {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
-authApi.interceptors.response.use(
+api.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -28,13 +32,12 @@ authApi.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
-        const response = await authApi.post("/refresh", { refreshToken });
-        const { token } = response.data;
+        const refreshToken = localStorage.getItem("REFRESH_TOKEN_KEY") ?? "";
+        const { accessToken } = await refreshApi({ refreshToken });
 
-        localStorage.setItem("token", token);
+        localStorage.setItem("ACCESS_TOKEN_KEY", accessToken);
 
-        originalRequest.headers.Authorization = `Bearer ${token}`;
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return axios(originalRequest);
       } catch (error) {}
     }
@@ -42,4 +45,4 @@ authApi.interceptors.response.use(
   },
 );
 
-export default authApi;
+export default api;
